@@ -4,7 +4,11 @@ Accepted at CVPR 2025.
 
 <div align="left">
     <a href="https://arxiv.org/abs/2503.08601" target="_blank">
-    <img src="https://img.shields.io/badge/Paper-arXiv-red" alt="Paper arXiv"></a>
+        <img src="https://img.shields.io/badge/Paper-arXiv-red" alt="Paper arXiv">
+    </a>
+    <a href="https://huggingface.co/datasets/dmalic/LiSu" target="_blank">
+        <img src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Dataset-blue" alt="Hugging Face">
+    </a>
 </div>
 
 <details>

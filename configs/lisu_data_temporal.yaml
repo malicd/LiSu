@@ -1,0 +1,37 @@
+class_path: lisu.datasets.my_ldatamodule.MyDataModule
+init_args:
+  batch_size: 4
+  num_workers: 8
+  temporal: True
+  test_dataset:
+    class_path: lisu.datasets.lisu_dataset.LiSuDataset
+    init_args:
+      root_path: "./data/LiSu"
+      split: "test"
+      shift_coord: [0, 0, 2.4]
+  predict_dataset:
+    class_path: lisu.datasets.lisu_dataset.LiSuDataset
+    init_args:
+      root_path: "./data/LiSu"
+      split: "test"
+      shift_coord: [0, 0, 2.4]
+  datasets:
+    - class_path: lisu.datasets.lisu_dataset.LiSuDataset
+      init_args:
+        root_path: "./data/LiSu"
+        split: "fulltrainval"
+        shift_coord: [0, 0, 2.4]
+        sample_points: 70000
+        transform:
+          - name: RandomRotate
+            angle: [-1, 1]
+            axis: "z"
+            p: 0.5
+          - name: RandomFlip
+            p: 0.5
+          - name: RandomJitter
+            sigma: 0.005
+            clip: 0.02
+          - name: RandomScale
+            scale: [0.9, 1.1]
+          - name: ShufflePoint

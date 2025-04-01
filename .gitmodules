@@ -1,0 +1,3 @@
+[submodule "lisu/models/PointTransformerV3"]
+	path = lisu/models/PointTransformerV3
+	url = https://github.com/Pointcept/PointTransformerV3.git

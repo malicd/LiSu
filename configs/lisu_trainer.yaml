@@ -1,0 +1,22 @@
+use_distributed_sampler: False
+precision: "bf16-mixed"
+accelerator: "gpu"
+strategy: "ddp"
+max_epochs: 50
+gradient_clip_val: 5.0
+sync_batchnorm: True
+enable_model_summary: True
+logger:
+  class_path: lightning.pytorch.loggers.TensorBoardLogger
+  init_args:
+    save_dir: tblogs
+check_val_every_n_epoch: 1
+callbacks:
+- class_path: lightning.pytorch.callbacks.ModelCheckpoint
+  init_args:
+    save_top_k: 1
+    every_n_epochs: 1
+    save_last: "link"
+limit_val_batches: 0
+val_check_interval: 0
+num_sanity_val_steps: 0

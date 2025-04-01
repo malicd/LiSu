@@ -1,0 +1,65 @@
+model:
+  class_path: lisu.models.ptv3.PointTransformerV3
+  init_args:
+    criteria:
+      - class_path: lisu.utils.loss_utils.L1Loss
+        init_args:
+          loss_weight: 1.
+      - class_path: lisu.utils.loss_utils.GraphTotalVariation
+        init_args:
+          k: 8
+          gamma: 0.1
+          loss_weight: 0.1
+      - class_path: lisu.utils.loss_utils.TemporalGraphTotalVariation
+        init_args:
+          k: 8
+          gamma: 0.1
+          loss_weight: 0.1
+      - class_path: lisu.utils.loss_utils.EikonalLoss
+        init_args:
+          loss_weight: 0.1
+    backbone_config:
+      grid_size: 0.01
+      in_channels: 3
+      order: ["z", "z-trans", "hilbert", "hilbert-trans"]
+      stride: [2, 2, 2, 2]
+      enc_depths: [2, 2, 2, 6, 2]
+      enc_channels: [32, 64, 128, 256, 512]
+      enc_num_head: [2, 4, 8, 16, 32]
+      enc_patch_size: [1024, 1024, 1024, 1024, 1024]
+      dec_depths: [2, 2, 2, 2]
+      dec_channels: [64, 64, 128, 256]
+      dec_num_head: [4, 4, 8, 16]
+      dec_patch_size: [1024, 1024, 1024, 1024]
+      mlp_ratio: 4
+      qkv_bias: True
+      qk_scale: null
+      attn_drop: 0.0
+      proj_drop: 0.0
+      drop_path: 0.3
+      shuffle_orders: True
+      pre_norm: True
+      enable_rpe: False
+      enable_flash: True
+      upcast_attention: False
+      upcast_softmax: False
+      cls_mode: False
+      pdnorm_bn: False
+      pdnorm_ln: False
+      pdnorm_decouple: True
+      pdnorm_adaptive: False
+      pdnorm_affine: True
+      pdnorm_conditions: []
+    head: [64, 32, 16, 3]
+    optimizer_cfg:
+      lr: 0.003
+      weight_decay: 0.005
+    lr_scheduler_cfg:
+      pct_start: 0.04
+      anneal_strategy: "cos"
+      div_factor: 10.
+      final_div_factor: 100.
+
+data: lisu_data_temporal.yaml
+
+trainer: lisu_trainer.yaml

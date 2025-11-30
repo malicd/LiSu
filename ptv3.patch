@@ -1,0 +1,20 @@
+diff --git a/model.py b/model.py
+index e847434..a201bc0 100644
+--- a/model.py
++++ b/model.py
+@@ -549,6 +549,7 @@ class Block(PointModule):
+                 kernel_size=3,
+                 bias=True,
+                 indice_key=cpe_indice_key,
++                algo=spconv.ConvAlgo.Native
+             ),
+             nn.Linear(channels, channels),
+             norm_layer(channels),
+@@ -771,6 +772,7 @@ class Embedding(PointModule):
+                 padding=1,
+                 bias=False,
+                 indice_key="stem",
++                algo=spconv.ConvAlgo.Native
+             )
+         )
+         if norm_layer is not None:

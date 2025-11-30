@@ -25,8 +25,9 @@ While surface normals are widely used to analyse 3D scene geometry, surface norm
 1. [Python Virtual Environment Setup](#venv_setup)
 2. [Obtaining the LiSu Dataset](#lisu_dataset)
 3. [Training](#training)
-4. [TODOs](#todos)
-5. [Citation](#citation)
+4. [Evaluation](#evaluation)
+5. [TODOs](#todos)
+6. [Citation](#citation)
 
 ## Python Virtual Environment Setup <a name="venv_setup"/>
 
@@ -103,11 +104,26 @@ srun python main.py fit -c configs/lisu_ptv3_l1+gtv+tgtv+eikonal_fp16_fulltrainv
 ### Self-Supervised Domain Adaptation
 *(Coming soon: Instructions for adapting to real-world datasets like Waymo.)*
 
+## Evaluation <a name="evaluation"/>
+
+There is a known issue with [spconv](https://github.com/traveller59/spconv) regarding mixed precision evaluation (see details [here](https://github.com/traveller59/spconv/issues/563)). To resolve this, we have provided a patch for PointTransformerV3.
+You can apply the patch using:
+```bash
+git apply --directory=lisu/models/PointTransformerV3 ptv3.patch
+```
+All model checkpoints are hosted on [🤗 HuggingFace](https://huggingface.co/dmalic/LiSu).
+To test the pretrained LiSu checkpoint, run:
+```bash
+python main.py test \
+    -c configs/sup_train/ptv3_xyz_l1+gtv+tgtv+eikonal_fp16_carla_fulltrainval.yaml \
+    --ckpt_path <path-to>/epoch=49-step=43600.ckpt   
+```
+
 ## TODOs <a name="todos"/>
 - [x] Release dataset
   - [x] Release CARLA surface normal LiDAR sensor
 - [x] Supervised training on LiSu dataset
-- [ ] LiSu model checkpoints & evaluation
+- [x] LiSu model checkpoints & evaluation
 - [ ] Self-supervised domain adaptation for Waymo
 - [ ] Waymo qualitative evaluation
 
@@ -122,3 +138,4 @@ srun python main.py fit -c configs/lisu_ptv3_l1+gtv+tgtv+eikonal_fp16_fulltrainv
   year={2025}
 } 
 ```
+
